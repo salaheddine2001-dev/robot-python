@@ -108,7 +108,7 @@ def contact():
 
       elif text_returnd in wdate:
         print(todayor)
-        talk(todayor,de+result.tm_year+result.tm_mday+result.tm_hour+result.tm_min+result.tm_sec) 
+        talk(todayor,countertime) 
 
       
    
@@ -116,7 +116,7 @@ def contact():
 
       else:
         print(prob)
-        talk(prob,de+result.tm_year+result.tm_mday+result.tm_hour+result.tm_min+result.tm_sec)
+        talk(prob,countertime)
       
 
       time.sleep(2)
@@ -127,9 +127,9 @@ root = Tk()
 root.title("eliza robot")
 root.geometry("520x600")
 root.resizable(False,False)
-img="as.gif"
 
-image =PhotoImage(file=img)
+
+image =PhotoImage(file="as.gif")
 Label(root, image=image).place(x=0,y=0)
 ttk.Button(root,text="start Talk with me",command=lambda:contact()).grid(column=0,row=0,padx=40,pady=15,ipadx=2,ipady=2)
 root.mainloop()
