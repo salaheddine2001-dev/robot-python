@@ -3,6 +3,7 @@ from tkinter import ttk
 import time
 import os
 import datetime
+import requests
 import playsound
 import random
 import speech_recognition as sr
@@ -12,6 +13,7 @@ from gtts import gTTS
 
 
 #variables and arrays
+weather=["weather","coord","Weather condition","weather prediction","Please, what is the weather forecast for tomorrow","Please, weather"]
 welcom=["hello","hi","hi eliza robot","hey"]
 robotwelcom=["hey","hello","how are you","hello my name is eliza robot","hello salah"]
 howareyou=["how are you","are you fine"]
@@ -91,6 +93,35 @@ def contact():
       elif text_returnd in wname:
         print(namerobot)
         talk(namerobot,countertime)
+
+
+
+      elif text_returnd in weather:
+        talk("Well, the weather for any city",countertime)
+        randomw=random.randint(1,30000)
+        try:
+          city=listen_user()
+          api_address='http://api.openweathermap.org/data/2.5/weather?appid=0c42f7f6b53b244c78a418f4f181282a&q='
+          url = api_address + city
+          json_data = requests.get(url).json()
+          format_add = json_data['weather'][0]['description']
+          wrrd="Weather in a city {} it will be {}".format(city,format_add)
+          talk(wrrd,randomw)
+          time.sleep(2)
+
+          
+        except:
+          print('Sorry, I dont know right now. Make sure to connect to the internet')
+          talk('Sorry, I dont know right now. Make sure to connect to the internet',randomw)
+          
+
+
+
+
+
+
+        
+      
 
 
 
