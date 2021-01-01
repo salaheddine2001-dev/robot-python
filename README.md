@@ -21,3 +21,7 @@ pip install SpeechRecognition
 <br>
 
 pip install gtts
+<br>
+pip install requests
+<br>
+pip install winsound
