@@ -16,13 +16,14 @@ import winsound
 
 #variables and arrays
 good=["nice","good","tanks","tanks you","wow","ok","okey"]
+bye=['Bye', 'bye', 'Goodbye', 'goodbye', 'Good bye' 'good bye', 'byebye', 'by by', 'By by', 'exit', 'close', 'So long', 'so long', 'okay bye', 'ok bye', 'Ok bye', 'Okay bye']
 goodar=["yeah nice","yeah good and nice","tanks","tanks you","wow tanks","ok tanks","okey tanks you verry much"]
 weather=["weather","coord","Weather condition","weather prediction","Please, what is the weather forecast for tomorrow","Please, weather"]
 welcom=["hello","hi","hi eliza robot","hey", 'Hi', 'Hello', 'hello', 'Hey', 'hey', 'yo','salam','Salam']
 robotwelcom=["hey","hello","how are you","hello my name is eliza robot","hello salah", 'Hi', 'Hello', 'hello', 'Hey', 'hey', 'salam', 'Salam']
 howareyou=["how are you","are you fine"]
 howareyourobot=["fine","I am fine and you","not fine","eliza robot not fine I am sad"]
-wname=["your name","name please","what is your name"]
+wname=["your name","name please","what is your name","Who are you", 'Your name', 'What are you','what are you']
 wtime=["time","what is the time now","what is the time","time please","hour","clock","clock please","what time is it"]
 wdate=["dite","dete","dyte","what is the date today","what is the date","date please","dyte please","date","today date","today dite","today dyte","dite please","what date is it"]
 nameoftoday=datetime.datetime.now().strftime("%A")
@@ -86,6 +87,7 @@ def contact():
       prob=random.choice(probleme)
       how=random.choice(howareyourobot)
       go=random.choice(goodar)
+      byerb=random.choice(bye)
 
       
 
@@ -108,6 +110,16 @@ def contact():
       elif text_returnd in good:
         print(go)
         talk(go,countertime)
+      
+
+
+      elif text_returnd in bye:
+        print(byerb)
+        talk(byerb,countertime)
+        time.sleep(1)
+        exit()
+
+
       
 
       elif text_returnd == nottalk:
