@@ -8,14 +8,18 @@ import playsound
 import random
 import speech_recognition as sr
 from gtts import gTTS
+import winsound
+
 
 
 
 
 #variables and arrays
+good=["nice","good","tanks","tanks you","wow","ok","okey"]
+goodar=["yeah nice","yeah good and nice","tanks","tanks you","wow tanks","ok tanks","okey tanks you verry much"]
 weather=["weather","coord","Weather condition","weather prediction","Please, what is the weather forecast for tomorrow","Please, weather"]
-welcom=["hello","hi","hi eliza robot","hey"]
-robotwelcom=["hey","hello","how are you","hello my name is eliza robot","hello salah"]
+welcom=["hello","hi","hi eliza robot","hey", 'Hi', 'Hello', 'hello', 'Hey', 'hey', 'yo','salam','Salam']
+robotwelcom=["hey","hello","how are you","hello my name is eliza robot","hello salah", 'Hi', 'Hello', 'hello', 'Hey', 'hey', 'salam', 'Salam']
 howareyou=["how are you","are you fine"]
 howareyourobot=["fine","I am fine and you","not fine","eliza robot not fine I am sad"]
 wname=["your name","name please","what is your name"]
@@ -27,7 +31,7 @@ alldate=datetime.datetime.now().strftime("%x")
 todayor="today is {} in year {} and complete date is {}".format(nameoftoday,year,alldate)
 namerobot="my name is eliza robot made by salah"
 probleme=["sorry I do not understand","I can not answer","Are you kidding me? I don't get you","Say hello first","Say hello at least","I do not want to talk now"]
-nottalk="not talk"
+nottalk="Why don't you talk to me, my friend"
 
 
 #listen user function for listen sound
@@ -35,6 +39,7 @@ def listen_user():
   rec=sr.Recognizer()
   with sr.Microphone() as source:
     rec.adjust_for_ambient_noise(source,duration=1)
+    winsound.Beep(frequency = 2500, duration = 100)
     print("mr robot is listening")
     
     audio=rec.listen(source,phrase_time_limit=3)
@@ -65,8 +70,9 @@ def talk(text,file):
 #contact  function for  talk with user
 def contact():
   while True:
-      
 
+      
+      
       result = time.localtime(1545925769)
       de=random.randint(1,30000)
       countertime=de+result.tm_year+result.tm_mday+result.tm_hour+result.tm_min+result.tm_sec
@@ -79,7 +85,11 @@ def contact():
       choi=random.choice(robotwelcom)
       prob=random.choice(probleme)
       how=random.choice(howareyourobot)
+      go=random.choice(goodar)
 
+      
+
+  
 
       text_returnd=listen_user()
 
@@ -93,6 +103,16 @@ def contact():
       elif text_returnd in wname:
         print(namerobot)
         talk(namerobot,countertime)
+      
+
+      elif text_returnd in good:
+        print(go)
+        talk(go,countertime)
+      
+
+      elif text_returnd == nottalk:
+        print(nottalk)
+        talk(nottalk,countertime)
 
 
 
@@ -113,15 +133,8 @@ def contact():
         except:
           print('Sorry, I dont know right now. Make sure to connect to the internet')
           talk('Sorry, I dont know right now. Make sure to connect to the internet',randomw)
-          
-
-
-
-
-
-
-        
       
+
 
 
 
@@ -149,26 +162,24 @@ def contact():
         print(prob)
         talk(prob,countertime)
       
-
+      
       time.sleep(2)
 
 
 
-root = Tk()
-root.title("eliza robot")
-root.geometry("520x600")
-root.resizable(False,False)
+def draw():
+  root = Tk()
+  root.title("eliza robot")
+  root.geometry("420x220")
+  root.resizable(False,False)
+  image =PhotoImage(file="A.gif")
+  Label(root, image=image).place(x=0,y=0)
+  ttk.Button(root,text="start Talk with me",command=lambda:contact()).grid(column=0,row=0,padx=40,pady=15,ipadx=2,ipady=2)
+
+  root.mainloop()
 
 
-image =PhotoImage(file="as.gif")
-Label(root, image=image).place(x=0,y=0)
-ttk.Button(root,text="start Talk with me",command=lambda:contact()).grid(column=0,row=0,padx=40,pady=15,ipadx=2,ipady=2)
-root.mainloop()
-        
-        
+draw()
 
-   
-      
-     
 
 
