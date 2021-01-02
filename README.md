@@ -1,4 +1,6 @@
 # robot-python
+This is a simple application for an assistant talking robot that you can ask many questions and it will answer you like the latest news in the world, weather conditions in a city in the world, time, date, and many other things
+
 python robot project for talk with user and give some information like date time ....
 <br>
 
