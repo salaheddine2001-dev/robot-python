@@ -1,5 +1,8 @@
+# importing  package 
 from tkinter import *
+from win32com.client import Dispatch 
 from tkinter import ttk
+import threading
 import time
 import os
 import datetime
@@ -11,10 +14,8 @@ from gtts import gTTS
 import winsound
 
 
-
-
-
 #variables and arrays
+news=["BBC news","news","Give me the latest news","the latest news","latest news","Give me the latest news, please","the latest news, please","latest news, please","the Top news, please","Top news, please","top news in the world"]
 good=["nice","good","tanks","tanks you","wow","ok","okey"]
 bye=['Bye', 'bye', 'Goodbye', 'goodbye', 'Good bye' 'good bye', 'byebye', 'by by', 'By by', 'exit', 'close', 'So long', 'so long', 'okay bye', 'ok bye', 'Ok bye', 'Okay bye']
 goodar=["yeah nice","yeah good and nice","tanks","tanks you","wow tanks","ok tanks","okey tanks you verry much"]
@@ -35,22 +36,51 @@ probleme=["sorry I do not understand","I can not answer","Are you kidding me? I 
 nottalk="Why don't you talk to me, my friend"
 
 
+
+def NewsFromBBC(): 
+      
+    # BBC news api 
+    main_url = "https://newsapi.org/v1/articles?source=bbc-news&sortBy=top&apiKey=e6c268c6206648e38d4a511cc701e33a"
+  
+    # fetching data in json format 
+    open_bbc_page = requests.get(main_url).json() 
+  
+    # getting all articles in a string article 
+    article = open_bbc_page["articles"] 
+  
+    # empty list which will  
+    # contain all trending news 
+    results = [] 
+      
+    for ar in article: 
+        results.append(ar["title"]) 
+        
+          
+    for i in range(len(results)): 
+          
+        # printing all trending news 
+        print(i + 1, results[i]) 
+        
+        print("_"*50)
+        speak = Dispatch("SAPI.Spvoice")
+        speak.Speak(results[i])
+        time.sleep(2)
 #listen user function for listen sound
 def listen_user():
   rec=sr.Recognizer()
   with sr.Microphone() as source:
     rec.adjust_for_ambient_noise(source,duration=1)
     winsound.Beep(frequency = 2500, duration = 100)
-    print("mr robot is listening")
+    print("robot is listening")
     
-    audio=rec.listen(source,phrase_time_limit=3)
+    audio=rec.listen(source,phrase_time_limit=4)
   try:
     text=rec.recognize_google(audio,language='en-US')
      
     return text
   except:
-    text=nottalk
-    return text
+    
+    return nottalk
 
 
 #talk  function for make talk sound
@@ -71,11 +101,11 @@ def talk(text,file):
 #contact  function for  talk with user
 def contact():
   while True:
-
       
       
+      global root
       result = time.localtime(1545925769)
-      de=random.randint(1,30000)
+      de=random.randint(1,300000000)
       countertime=de+result.tm_year+result.tm_mday+result.tm_hour+result.tm_min+result.tm_sec
 
 
@@ -107,6 +137,15 @@ def contact():
         talk(namerobot,countertime)
       
 
+
+      elif text_returnd in news:
+        
+        talk("ok",countertime)
+        time.sleep(1)
+        NewsFromBBC()
+        
+      
+
       elif text_returnd in good:
         print(go)
         talk(go,countertime)
@@ -118,6 +157,11 @@ def contact():
         talk(byerb,countertime)
         time.sleep(1)
         exit()
+        
+  
+
+        
+
 
 
       
@@ -175,23 +219,22 @@ def contact():
         talk(prob,countertime)
       
       
-      time.sleep(2)
+      time.sleep(3)
 
 
 
-def draw():
-  root = Tk()
-  root.title("eliza robot")
-  root.geometry("420x220")
-  root.resizable(False,False)
-  image =PhotoImage(file="A.gif")
-  Label(root, image=image).place(x=0,y=0)
-  ttk.Button(root,text="start Talk with me",command=lambda:contact()).grid(column=0,row=0,padx=40,pady=15,ipadx=2,ipady=2)
+root = Tk()
 
-  root.mainloop()
+img="A.gif"
+root.title("eliza robot")
+root.geometry("420x220")
+root.resizable(False,False)
+image =PhotoImage(file=img)
+Label(root, image=image).place(x=0,y=0)
 
-
-draw()
+threading.Thread(target=contact).start()
 
 
+
+root.mainloop()
 
