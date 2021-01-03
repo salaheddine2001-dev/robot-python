@@ -153,12 +153,20 @@ def contact():
       
 
       elif "Google" in text_returnd:
+        randGoogle=random.randint(1,30000)
+        randsearch=random.randint(1,30000000)
         print("Google")
         talk("ok",countertime)
         time.sleep(1)
-        webbrowser.open('http://google.com')
-      
-
+        talk("What do you want to search on Google?",randGoogle)
+        search=listen_user()
+        time.sleep(2)
+        talk("ok",randsearch)
+        time.sleep(1)
+        webbrowser.open('google.com/search?q='+search)
+        
+        
+ 
       elif "Youtube" in text_returnd or "YouTube" in text_returnd:
         print("youtube")
         talk("ok",countertime)
@@ -270,6 +278,5 @@ Label(root, image=image).place(x=0,y=0)
 threading.Thread(target=contact).start()
 
 root.mainloop()
-
 
 
