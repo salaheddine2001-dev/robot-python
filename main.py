@@ -1,5 +1,6 @@
 # importing  package 
 from tkinter import *
+import webbrowser
 from win32com.client import Dispatch 
 from tkinter import ttk
 import threading
@@ -12,10 +13,16 @@ import random
 import speech_recognition as sr
 from gtts import gTTS
 import winsound
+# importing  package
 
-
-#variables and arrays
-news=["BBC news","news","Give me the latest news","the latest news","latest news","Give me the latest news, please","the latest news, please","latest news, please","the Top news, please","Top news, please","top news in the world"]
+#####variables and arrays
+nameoftoday=datetime.datetime.now().strftime("%A")
+year=datetime.datetime.now().year
+alldate=datetime.datetime.now().strftime("%x")
+todayor="today is {} in year {} and complete date is {}".format(nameoftoday,year,alldate)
+namerobot="eliza robot made by salah"
+probleme=["sorry I do not understand","I can not answer","Are you kidding me? I don't get you","Say hello first","Say hello at least","I do not want to talk now"]
+nottalk="Why don't you talk to me, my friend"
 good=["nice","good","tanks","tanks you","wow","ok","okey"]
 bye=['Bye', 'bye', 'Goodbye', 'goodbye', 'Good bye' 'good bye', 'byebye', 'by by', 'By by', 'exit', 'close', 'So long', 'so long', 'okay bye', 'ok bye', 'Ok bye', 'Okay bye']
 goodar=["yeah nice","yeah good and nice","tanks","tanks you","wow tanks","ok tanks","okey tanks you verry much"]
@@ -25,15 +32,8 @@ robotwelcom=["hey","hello","how are you","hello my name is eliza robot","hello s
 howareyou=["how are you","are you fine"]
 howareyourobot=["fine","I am fine and you","not fine","eliza robot not fine I am sad"]
 wname=["your name","name please","what is your name","Who are you", 'Your name', 'What are you','what are you']
-wtime=["time","what is the time now","what is the time","time please","hour","clock","clock please","what time is it"]
 wdate=["dite","dete","dyte","what is the date today","what is the date","date please","dyte please","date","today date","today dite","today dyte","dite please","what date is it"]
-nameoftoday=datetime.datetime.now().strftime("%A")
-year=datetime.datetime.now().year
-alldate=datetime.datetime.now().strftime("%x")
-todayor="today is {} in year {} and complete date is {}".format(nameoftoday,year,alldate)
-namerobot="my name is eliza robot made by salah"
-probleme=["sorry I do not understand","I can not answer","Are you kidding me? I don't get you","Say hello first","Say hello at least","I do not want to talk now"]
-nottalk="Why don't you talk to me, my friend"
+#####variables and arrays
 
 
 
@@ -64,7 +64,10 @@ def NewsFromBBC():
         print("_"*50)
         speak = Dispatch("SAPI.Spvoice")
         speak.Speak(results[i])
-        time.sleep(2)
+        time.sleep(1)
+
+
+
 #listen user function for listen sound
 def listen_user():
   rec=sr.Recognizer()
@@ -82,6 +85,9 @@ def listen_user():
     
     return nottalk
 
+#listen user function for listen sound
+
+
 
 #talk  function for make talk sound
 def talk(text,file):
@@ -93,7 +99,7 @@ def talk(text,file):
 
   os.remove(filename)
 
-
+#talk  function for make talk sound
 
 
   
@@ -102,8 +108,6 @@ def talk(text,file):
 def contact():
   while True:
       
-      
-      global root
       result = time.localtime(1545925769)
       de=random.randint(1,300000000)
       countertime=de+result.tm_year+result.tm_mday+result.tm_hour+result.tm_min+result.tm_sec
@@ -119,30 +123,62 @@ def contact():
       go=random.choice(goodar)
       byerb=random.choice(bye)
 
-      
-
-  
-
       text_returnd=listen_user()
-
-      if text_returnd in welcom:
+      print(text_returnd)
+      if text_returnd in welcom or "hello" in text_returnd:
         print(choi)
         talk(choi,countertime)
         
       
 
 
-      elif text_returnd in wname:
+      elif text_returnd in wname or "name" in text_returnd:
         print(namerobot)
         talk(namerobot,countertime)
+        
+
+
+      elif "Facebook" in text_returnd:
+        print("facebook")
+        talk("ok",countertime)
+        time.sleep(1)
+        webbrowser.open('http://facebook.com')
+      
+
+      elif "Instagram" in text_returnd:
+        print("Instagram")
+        talk("ok",countertime)
+        time.sleep(1)
+        webbrowser.open('http://instagram.com')
+      
+
+      elif "Google" in text_returnd:
+        print("Google")
+        talk("ok",countertime)
+        time.sleep(1)
+        webbrowser.open('http://google.com')
+      
+
+      elif "Youtube" in text_returnd or "YouTube" in text_returnd:
+        print("youtube")
+        talk("ok",countertime)
+        time.sleep(1)
+        webbrowser.open('http://youtube.com')
       
 
 
-      elif text_returnd in news:
+      elif "news" in text_returnd or "last" in text_returnd:
         
         talk("ok",countertime)
         time.sleep(1)
-        NewsFromBBC()
+        try:
+          NewsFromBBC()
+        except:
+          print('Sorry, I dont know right now. Make sure to connect to the internet')
+          talk('Sorry, I dont know right now. Make sure to connect to the internet',countertime)
+
+
+        
         
       
 
@@ -172,7 +208,7 @@ def contact():
 
 
 
-      elif text_returnd in weather:
+      elif text_returnd in weather or "weather" in text_returnd:
         talk("Well, the weather for any city",countertime)
         randomw=random.randint(1,30000)
         try:
@@ -200,20 +236,18 @@ def contact():
         
 
 
-      elif text_returnd in wtime:
+      elif "time" in text_returnd or "clock" in text_returnd:
         print(timeor)
         talk(timeor,countertime) 
         
 
 
-      elif text_returnd in wdate:
+      elif text_returnd in wdate or "date" in text_returnd:
         print(todayor)
         talk(todayor,countertime) 
 
       
    
-
-
       else:
         print(prob)
         talk(prob,countertime)
@@ -221,6 +255,7 @@ def contact():
       
       time.sleep(3)
 
+#contact  function for  talk with user
 
 
 root = Tk()
@@ -234,7 +269,7 @@ Label(root, image=image).place(x=0,y=0)
 
 threading.Thread(target=contact).start()
 
-
-
 root.mainloop()
+
+
 
